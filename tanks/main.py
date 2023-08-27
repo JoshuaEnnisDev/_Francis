@@ -25,13 +25,13 @@ def update():
     if keyboard.w:
         player1.angle = 0
         player1.y -= 4
-    if keyboard.a:
+    elif keyboard.a:
         player1.angle = 90
         player1.x -= 4
-    if keyboard.s:
+    elif keyboard.s:
         player1.angle = 180
         player1.y += 4
-    if keyboard.d:
+    elif keyboard.d:
         player1.angle = -90
         player1.x += 4
 
