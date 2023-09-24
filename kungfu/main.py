@@ -18,15 +18,12 @@ def on_mouse_down(pos):
 
 
 def set_pos():
-    if len(player1.positions) != 0:
-        player1.pos = player1.positions.pop(0)
-    else:
-        clock.unschedule(set_pos)
-
-
-def update_pos():
-    num_pos = len(player1.positions)
-    clock.schedule_interval(set_pos, 1 / num_pos)
+    for position in player1.positions:
+        if player1.timer <= 0:
+            player1.timer = 10
+            player1.pos = player1.positions.pop(0)
+        else:
+            player1.timer -= 1
 
 
 def on_mouse_up(pos):
@@ -43,15 +40,18 @@ def on_mouse_move(pos):
 
 def draw():
     screen.clear()
-    player1.draw()
-    for circle in circle_positions:
-        screen.draw.filled_circle((circle), 5, "red")
+    if player1.move:
+        player1.draw()
+    for position in circle_positions:
+        screen.draw.filled_circle(position, 5, "red")
 
 
 def update():
     if player1.move:
-        update_pos()
+        set_pos()
+    if len(player1.positions) <= 0:
         player1.move = False
+
 
 
 pgzrun.go()
