@@ -17,12 +17,7 @@ def on_mouse_down(pos):
     global mouse_down
     mouse_down = True
 
-
-def update_pos():
-    for position in player1.positions:
-        player1.pos = position
-
-
+    
 def on_mouse_up(pos):
     global mouse_down
     mouse_down = False
@@ -45,12 +40,12 @@ def draw():
 
 
 def update():
-    draw()
     player1.timer -= 1
-    if player1.move:
-        update_pos()
+    if player1.move == True:
+        for position in player1.positions:
+            print(position)
+            player1.pos = position
         player1.move = False
-
 
 
 pgzrun.go()
