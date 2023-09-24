@@ -8,33 +8,49 @@ player1.start_pos = player1.pos
 player1.end_pos = player1.pos
 player1.positions = []
 player1.timer = 10
+player1.move = False
+mouse_down = False
+circle_positions = []
 
 
 def on_mouse_down(pos):
-    player1.start_pos = pos
+    global mouse_down
+    mouse_down = True
+
+
+def update_pos():
+    for position in player1.positions:
+        player1.pos = position
 
 
 def on_mouse_up(pos):
-    player1.end_pos = pos
-    for position in player1.positions:
-        if player1.timer == 10:
-            player1.pos = position
+    global mouse_down
+    mouse_down = False
+    player1.move = True
+    player1.positions = circle_positions
+    circle_positions.clear()
 
 
 def on_mouse_move(pos):
-    player1.positions.append(pos)
-    # player1.pos = pos
+    global mouse_down
+    if mouse_down:
+        circle_positions.append(pos)
 
 
 def draw():
     screen.clear()
     player1.draw()
+    for i, circle in enumerate(circle_positions):
+        screen.draw.filled_circle((circle_positions[i]), 5, "red")
 
 
 def update():
+    draw()
     player1.timer -= 1
-    if player1.timer <= 0:
-        player1.timer = 10
+    if player1.move:
+        update_pos()
+        player1.move = False
+
 
 
 pgzrun.go()
