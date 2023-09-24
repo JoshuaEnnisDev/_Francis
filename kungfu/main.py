@@ -1,5 +1,4 @@
 import pgzrun
-from pgzhelper import *
 from time import sleep
 
 # actors
@@ -17,12 +16,30 @@ def on_mouse_down(pos):
     global mouse_down
     mouse_down = True
 
+
+def set_pos():
+    if len(player1.positions) != 0:
+        player1.pos = player1.positions.pop(0)
+    else:
+        clock.unschedule(set_pos)
+
+
+def update_pos(delta):
+    # player1.positions.reverse()
     
+    num_pos = len(player1.positions)
+    print(num_pos)
+    clock.schedule_interval(set_pos, 1 / num_pos)
+    # for position in player1.positions: 
+    #     clock.schedule(set_pos, 1.0)
+    #     player1.pos = position
+
+
 def on_mouse_up(pos):
     global mouse_down
     mouse_down = False
     player1.move = True
-    player1.positions = circle_positions
+    player1.positions = circle_positions.copy()
     circle_positions.clear()
 
 
@@ -39,13 +56,11 @@ def draw():
         screen.draw.filled_circle((circle_positions[i]), 5, "red")
 
 
-def update():
-    player1.timer -= 1
-    if player1.move == True:
-        for position in player1.positions:
-            print(position)
-            player1.pos = position
+def update(delta):
+    if player1.move:
+        update_pos(delta)
         player1.move = False
+
 
 
 pgzrun.go()
