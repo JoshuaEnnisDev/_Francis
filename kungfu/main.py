@@ -3,10 +3,8 @@ from time import sleep
 
 # actors
 player1 = Actor("barnacle")
-player1.start_pos = player1.pos
-player1.end_pos = player1.pos
 player1.positions = []
-player1.timer = 10
+
 player1.move = False
 player1.mouse_down = False
 
